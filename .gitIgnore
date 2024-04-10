@@ -1,0 +1,10 @@
+__pycache__/
+
+# Database
+*.sqlite3
+
+# Static files
+staticfiles/
+
+# Media files
+uploads/

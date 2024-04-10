@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "main/list.css" %}">
+{% endblock css_files %}
+{% block title %}Taks List{% endblock title %}
+
+{% block content %}
+
+<div class="header-bar">
+    <div>
+        <h2>Hello {{ request.user|title }}</h2>
+        <h5>{{ count }} task{{ count|pluralize:"s"}} to complete</h5>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button>Logout</button>
+        </form>
+    {% else %}
+        <a href="{% url "login" %}">Login</a>
+    {% endif %}
+</div>
+    <div class="list-body">
+        <div class="search-add-form">
+            <form>
+                <input placeholder="search" type="text" name="search-input" value={{searched}}>
+                <button class="btn btn-info">Search</button>
+            </form>
+            <a class="add-icon" href="{% url "add" %}">+</a>
+        </div>
+    
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Task{{ count|pluralize:"s" }}</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td> {{ forloop.counter }} </td>
+                        <td> <p style="font-size: 20px">{{ task }}</p> </td>
+                        <td>{% if task.is_completed %}
+                                <span style="color: green;">&#10003;</span>
+                            {% else %}
+                                <span style="color: gray;">&#8987;</span>
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url "update" task.id %}" class="btn btn-primary">Edit</a></td>
+                        <td><a href="{% url "delete" task.id %}" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                {% empty %}
+                    <h3>NO ITEM</h3>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+{% endblock %}

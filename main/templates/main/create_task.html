@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Create Task{% endblock title %}
+
+{% block content %}
+    <div class="padding">
+        <a href="{% url "index" %}">Back</a>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary">Add Task</button>
+        </form>
+    </div>
+{% endblock content %}

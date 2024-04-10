@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}Log In{% endblock title %}
+
+{% block content %}
+
+    <div class="padding">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button>Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url "register" %}">Register</a></p>
+    </div>
+
+{% endblock content %}
